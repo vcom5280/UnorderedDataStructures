@@ -51,8 +51,15 @@
 // makeWordCounts: Given a vector of (non-unique) strings, returns a
 // StringIntMap where each string is mapped to its number of occurences.
 StringIntMap makeWordCounts(const StringVec& words) {
-  StringIntMap wordcount_map;
-
+  StringIntMap wordcount_map={};
+  for(unsigned int i = 0;i<words.size();++i){
+    if(wordcount_map.count(words[i])==1){
+      wordcount_map[words[i]]=wordcount_map[words[i]]+1;
+    }else{
+      wordcount_map[words[i]]=1;
+    }
+  }
+  
   // =================================================
   // EXERCISE 1 WORKSPACE: YOUR CODE HERE
   // =================================================
@@ -100,8 +107,11 @@ int lookupWithFallback(const StringIntMap& wordcount_map, const std::string& key
   // =================================================
   // EXERCISE 2 WORKSPACE: YOUR CODE HERE
   // =================================================
-
-  return -1337; // Change this!
+  if(wordcount_map.count(key)==1){
+    return wordcount_map.find(key)->second;
+  }else {
+    return fallbackVal;
+  }
 }
 
 
