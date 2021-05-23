@@ -47,13 +47,33 @@
 // GridGraph::printDetails in GridGraph.h shows another method, by constructing
 // a set of the unique edges only.
 int GridGraph::countEdges() const {
-  int numEdges = 0;
-
+  std::unordered_set<IntPairPair> edgeSet;
   // =======================================================================
   // TODO: Your code here!
   // =======================================================================
 
-  return numEdges;
+  // Loop over key-value pairs
+  for (const auto& kv : adjacencyMap) {
+    // key: point
+    const auto& p1 = kv.first;
+    // value: neighbor point set
+    const auto& p1_neighbors = kv.second;
+
+    // Points that have no adjacencies are isolated points, with no incident edges.
+    if (!p1_neighbors.empty()) {
+       for (const auto& p2 : p1_neighbors) {
+        IntPairPair edge;
+        if (p1 < p2) {
+          edge = std::make_pair(p1,p2);
+        }
+        else {
+          edge = std::make_pair(p2,p1);
+        }
+        edgeSet.insert(edge);
+      }
+    }
+  }
+  return edgeSet.size();
 }
 
 // GridGraph::removePoint:
@@ -97,10 +117,10 @@ void GridGraph::removePoint(const IntPair& p1) {
   // from adjacencyMap directly. (There is no other GridGraph helper function
   // for this, because that's what we're implementing right now! We need to
   // use adjacencyMap's own erase function directly to erase the key.)
-
   // =======================================================================
   // TODO: Your code here!
   // =======================================================================
+    adjacencyMap.erase(p1);
 }
 
 // =========================================================================
