@@ -108,11 +108,14 @@ void GridGraph::removePoint(const IntPair& p1) {
   // of small pieces of data like this.)
 
   const GridGraph::NeighborSet originalNeighbors = adjacencyMap.at(p1);
-
   // =======================================================================
   // TODO: Your code here!
   // =======================================================================
+  for (const IntPair& neighbor : originalNeighbors) {
+      removeEdge(p1,neighbor);
+  }
 
+  
   // Finally, for the one point we are removing, erase the point key itself
   // from adjacencyMap directly. (There is no other GridGraph helper function
   // for this, because that's what we're implementing right now! We need to
@@ -121,6 +124,7 @@ void GridGraph::removePoint(const IntPair& p1) {
   // TODO: Your code here!
   // =======================================================================
     adjacencyMap.erase(p1);
+    
 }
 
 // =========================================================================
